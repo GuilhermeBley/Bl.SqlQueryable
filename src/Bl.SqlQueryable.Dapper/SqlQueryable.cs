@@ -2,6 +2,7 @@ using System.Collections;
 using System.Data;
 using System.Linq.Expressions;
 using Bl.SqlQueryable.Dapper.Builder;
+using Bl.SqlQueryable.Dapper.Builder.Defaults;
 using Bl.SqlQueryable.Dapper.Provider;
 using Dapper;
 
@@ -9,8 +10,8 @@ namespace Bl.SqlQueryable.Dapper;
 
 public class SqlQueryable<T> : IQueryable<T>
 {
-    private static IEnumerable<ISqlBuilder> _defaultBuilders
-        = Enumerable.Empty<ISqlBuilder>();
+    private static IEnumerable<ISqlBuilder> _defaultBuilders = new ISqlBuilder[]
+        { new FilterBuilder() };
     protected virtual IEnumerable<ISqlBuilder> Builders { get; } = _defaultBuilders;
     public Type ElementType => typeof(T);
 
