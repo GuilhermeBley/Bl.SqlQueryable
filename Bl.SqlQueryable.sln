@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1A394831-289
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bl.SqlQueryable.Dapper", "src\Bl.SqlQueryable.Dapper\Bl.SqlQueryable.Dapper.csproj", "{ED7D20CA-64DB-42D5-8AB0-87184354FC44}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9BBD1351-2690-4E7B-87A5-CAAD0148E153}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bl.SqlQueryable.Dapper.Tests", "tests\Bl.SqlQueryable.Dapper.Tests\Bl.SqlQueryable.Dapper.Tests.csproj", "{A0395160-035A-4322-841D-3C6E1E9B2652}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{ED7D20CA-64DB-42D5-8AB0-87184354FC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED7D20CA-64DB-42D5-8AB0-87184354FC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED7D20CA-64DB-42D5-8AB0-87184354FC44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0395160-035A-4322-841D-3C6E1E9B2652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0395160-035A-4322-841D-3C6E1E9B2652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0395160-035A-4322-841D-3C6E1E9B2652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0395160-035A-4322-841D-3C6E1E9B2652}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{ED7D20CA-64DB-42D5-8AB0-87184354FC44} = {1A394831-289A-4E24-BDDF-96D7839EEC24}
+		{A0395160-035A-4322-841D-3C6E1E9B2652} = {9BBD1351-2690-4E7B-87A5-CAAD0148E153}
 	EndGlobalSection
 EndGlobal
