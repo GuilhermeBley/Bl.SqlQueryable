@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Bl.SqlQueryable.Dapper.Provider;
 
-internal class SqlQueryableProvider<T> : IQueryProvider
+internal class SqlQueryableProvider<T> : IAsyncQueryProvider
 {
     private readonly string _query;
     private readonly IDbConnection _connection;
@@ -69,6 +69,23 @@ internal class SqlQueryableProvider<T> : IQueryProvider
         return (TResult)items.AsQueryable().Provider.CreateQuery(expression);
     }
 
+    public async Task<TResult> ExecuteAsync<TResult>(Expression expression, CancellationToken cancellationToken = default)
+    {
+        var queryCtx = new QueryContext(_query, expression);
+
+        foreach (var builder in _builders)
+        {
+            var generatedParameters = 
+                builder.ApplyInQueryContext(queryCtx);
+
+            AddRangeDynamicParameters(_parameters, generatedParameters);
+        }
+
+        var items = await QueryAsync(queryCtx.Query, _parameters);
+
+        return (TResult)items.AsQueryable().Provider.CreateQuery(expression);
+    }
+
     public IEnumerable<T> Query(string query, DynamicParameters dynamicParameters)
         => _connection.Query<T>(
             sql: query, 
@@ -77,7 +94,14 @@ internal class SqlQueryableProvider<T> : IQueryProvider
             buffered: _buffered,
             commandTimeout: _commandTimeout,
             commandType: _commandType);
-    
+
+    public async Task<IEnumerable<T>> QueryAsync(string query, DynamicParameters dynamicParameters)
+        => await _connection.QueryAsync<T>(
+            sql: query, 
+            param: dynamicParameters,
+            transaction: _transaction,
+            commandTimeout: _commandTimeout,
+            commandType: _commandType);
 
     private static void AddRangeDynamicParameters(DynamicParameters dynamicParameters, IEnumerable<KeyValuePair<string, object?>> newValuesToTryAdd)
     {
