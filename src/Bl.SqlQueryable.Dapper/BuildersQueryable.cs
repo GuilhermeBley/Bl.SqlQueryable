@@ -8,7 +8,7 @@ using Dapper;
 
 namespace Bl.SqlQueryable.Dapper;
 
-public class SqlQueryable<T> : IQueryable<T>
+public class BuildersQueryable<T> : IQueryable<T>
 {
     private static IEnumerable<ISqlBuilder> _defaultBuilders = new ISqlBuilder[]
         { new FilterBuilder() };
@@ -19,7 +19,7 @@ public class SqlQueryable<T> : IQueryable<T>
 
     public IQueryProvider Provider { get; private set; }
 
-    public SqlQueryable(
+    public BuildersQueryable(
         string query, 
         System.Data.IDbConnection connection,
         DynamicParameters dynamicParameters,

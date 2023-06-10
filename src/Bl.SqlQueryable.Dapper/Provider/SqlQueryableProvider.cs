@@ -40,7 +40,7 @@ internal class SqlQueryableProvider<T> : IQueryProvider
         => CreateQuery<T>(expression);
 
     public IQueryable<TElement> CreateQuery<TElement>(Expression expression)
-        => new SqlQueryable<TElement>(
+        => new BuildersQueryable<TElement>(
             query: _query, 
             connection: _connection,
             dynamicParameters: _parameters,
