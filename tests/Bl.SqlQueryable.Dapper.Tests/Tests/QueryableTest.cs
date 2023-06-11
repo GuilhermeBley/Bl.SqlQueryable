@@ -3,7 +3,7 @@ using Bl.SqlQueryable.Dapper;
 
 namespace Bl.SqlQueryable.Dapper.Tests.Tests;
 
-public class QueryableTest
+public class QueryableTest : DefaultHost
 {
     [Fact]
     public async Task Test1()

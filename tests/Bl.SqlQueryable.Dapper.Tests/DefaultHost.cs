@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySql.Data.MySqlClient;
 
 namespace Bl.SqlQueryable.Dapper.Tests;
 
@@ -19,8 +20,8 @@ public class DefaultHost
 
     private void ConfigureServices(HostBuilderContext context, IServiceCollection serviceCollection)
     {
-        serviceCollection.Add<System.Data.IDbConnection>(
-            (provider) => new MySqlConnection);
+        serviceCollection.AddScoped<System.Data.IDbConnection>(
+            (provider) => new MySqlConnection(context.Configuration.GetConnectionString("mysql")));
     }
 
     private void ConfigureConfiguration(HostBuilderContext context, IConfigurationBuilder configurationBuilder)
