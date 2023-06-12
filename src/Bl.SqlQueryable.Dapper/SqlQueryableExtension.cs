@@ -21,6 +21,22 @@ public static class SqlQueryableExtension
         return queryable;
     }
 
-    public static async Task<IEnumerable<T>> ExecuteQueryableAsync<T>(BuildersQueryable<T> queryable, CancellationToken cancellationToken = default)
+    public static async Task<List<T>> ToListAsync<T>(this IQueryable<T> queryable, CancellationToken cancellationToken = default)
+        => new List<T>(await TryGetEnumerable<T>(queryable, cancellationToken: cancellationToken));
+
+    public static async Task<IEnumerable<T>> AsEnumerableAsync<T>(this IQueryable<T> queryable, CancellationToken cancellationToken = default)
+        => await TryGetEnumerable<T>(queryable, cancellationToken: cancellationToken);
+
+    public static async Task<IEnumerable<T>> ExecuteQueryableAsync<T>(this BuildersQueryable<T> queryable, CancellationToken cancellationToken = default)
         => await ((IAsyncQueryProvider)queryable.Provider).ExecuteAsync<IEnumerable<T>>(queryable.Expression, cancellationToken: cancellationToken);
+
+    private static async Task<IEnumerable<T>> TryGetEnumerable<T>(IQueryable<T> queryable, CancellationToken cancellationToken = default)
+    {
+        var asyncProvider = queryable.Provider as IAsyncQueryProvider;
+
+        if (asyncProvider is null)
+            return queryable.Provider.Execute<IEnumerable<T>>(queryable.Expression);
+
+        return await asyncProvider.ExecuteAsync<IEnumerable<T>>(queryable.Expression, cancellationToken: cancellationToken);
+    }
 }
